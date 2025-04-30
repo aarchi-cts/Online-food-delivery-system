@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using Online_food_delivery_system.Interface;
 using Online_food_delivery_system.Models;
+using Online_food_delivery_system.Repository;
+using Online_food_delivery_system.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +14,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<FoodDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("cstring")));
+builder.Services.AddScoped<IPayment, PaymentRepository>();
+builder.Services.AddScoped<PaymentService>();
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;

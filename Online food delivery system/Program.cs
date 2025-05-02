@@ -15,7 +15,11 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<FoodDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("cstring")));
 builder.Services.AddScoped<IPayment, PaymentRepository>();
+builder.Services.AddScoped<IOrder, OrderRepository>();
+builder.Services.AddScoped<IMenuItem, MenuItemRepository>();
 builder.Services.AddScoped<PaymentService>();
+builder.Services.AddScoped<MenuItemService>();
+builder.Services.AddScoped<OrderService>();
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;

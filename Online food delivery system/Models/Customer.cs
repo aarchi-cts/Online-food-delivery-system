@@ -11,21 +11,21 @@ namespace Online_food_delivery_system.Models
 
         [Required (ErrorMessage ="Please Enter Your Name")]
         [MaxLength(255)]
-        public string Name { get; set;}
+        public string? Name { get; set;}
 
         [Required (ErrorMessage ="Please Enter Your Email")]
         [EmailAddress]
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
         [Required(ErrorMessage = "Please Enter Your Phone")]
         [Phone]
-        public string Phone { get; set; }
+        public string? Phone { get; set; }
 
         //[Required]
         //[DataType(DataType.Password)]
         //public string? Password { get; set; }
 
         //public Order? Order { get; set; }
-        public List<Order> Orders { get; set; } = new List<Order>();
+        public List<Order>? Orders { get; set; } = new List<Order>();
     }
 }

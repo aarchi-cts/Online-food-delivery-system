@@ -13,19 +13,19 @@ namespace Online_food_delivery_system.Models
 
         [Required (ErrorMessage ="Please Enter your Contact")]
         [MaxLength(15)]
-        public string RestaurantContact { get; set; }
+        public string? RestaurantContact { get; set; }
 
         [Required]
-        public bool Availability { get; set; }
+        public bool? Availability { get; set; }
 
         [Required (ErrorMessage ="Please Enter your Address")]
-        public string Address { get; set; }
+        public string? Address { get; set; }
 
-        [Required(ErrorMessage = "Please Enter your Password")]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
+        //[Required(ErrorMessage = "Please Enter your Password")]
+        //[DataType(DataType.Password)]
+        //public string Password { get; set; }
 
-        public List<MenuItem> MenuItems { get; set; } = new List<MenuItem>();
+        public List<MenuItem>?MenuItems { get; set; } = new List<MenuItem>();
 
 
         //public List<MenuItem>? MenuItems { get; set; }

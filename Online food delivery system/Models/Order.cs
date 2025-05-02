@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Online_food_delivery_system.Models
 {
@@ -9,21 +11,21 @@ namespace Online_food_delivery_system.Models
         public int OrderID { get; set; }
 
         [ForeignKey("Customer")]
-        public int CustomerID { get; set; }
-        public Customer Customer { get; set; }
-
+        public int? CustomerID { get; set; }
+        public Customer? Customer { get; set; }
 
         [ForeignKey("Restaurant")]
-        public int RestaurantID { get; set; }
-        public Restaurant Restaurant { get; set; }
+        public int? RestaurantID { get; set; }
+        public Restaurant? Restaurant { get; set; }
 
-
-        public string Status { get; set; }
-        public decimal TotalAmount { get; set; }
+        public string? Status { get; set; }
+        public decimal? TotalAmount { get; set; }
 
         public Payment? Payment { get; set; }
         public Delivery? Delivery { get; set; }
 
-        //public List<Restaurant> Restaurants { get; set; }
+        public List<OrderMenuItem>? OrderMenuItems { get; set; } 
+
+
     }
-    }
+}

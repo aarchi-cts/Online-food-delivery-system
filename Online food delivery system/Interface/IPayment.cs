@@ -9,5 +9,6 @@ namespace Online_food_delivery_system.Interface
         Task AddAsync(Payment payment);
         Task UpdateAsync(Payment payment);
         Task DeleteAsync(int PaymentID);
+        Task<Payment> ProcessPaymentAsync(Payment payment);
     }
 }

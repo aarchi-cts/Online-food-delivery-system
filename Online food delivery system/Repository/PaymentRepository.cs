@@ -11,6 +11,7 @@ namespace Online_food_delivery_system.Repository
         {
             _context = context;
         }
+
         public async Task AddAsync(Payment payment)
         {
             await _context.Payments.AddAsync(payment);
@@ -19,8 +20,8 @@ namespace Online_food_delivery_system.Repository
 
         public async Task DeleteAsync(int PaymentID)
         {
-            var pay=await _context.Payments.FindAsync(PaymentID);
-            if(pay != null)
+            var pay = await _context.Payments.FindAsync(PaymentID);
+            if (pay != null)
             {
                 _context.Payments.Remove(pay);
                 await _context.SaveChangesAsync();
@@ -29,19 +30,34 @@ namespace Online_food_delivery_system.Repository
 
         public async Task<IEnumerable<Payment>> GetAllAsync()
         {
-            return await _context.Payments.Include(s=>s.Order).Include(s=>s.Delivery).ToListAsync();
+            return await _context.Payments.Include(p => p.Order)
+                .ThenInclude(o => o.Customer)
+                .Include(p => p.Order)
+                .ThenInclude(o => o.Restaurant)
+                .Include(p => p.Delivery)
+                .ToListAsync();
         }
 
         public async Task<Payment> GetByIdAsync(int ID)
         {
-            var payment=await _context.Payments
-                .Include(s=>s.Order)
-                .Include(s=>s.Delivery)
-                .FirstOrDefaultAsync(p=>p.OrderID==ID);
-            if(payment == null)
+            var payment = await _context.Payments
+                .Include(p => p.Order)
+                .ThenInclude(o => o.Customer)
+                .Include(p => p.Order)
+                .ThenInclude(o => o.Restaurant)
+                .Include(s => s.Delivery)
+                .FirstOrDefaultAsync(p => p.OrderID == ID);
+            if (payment == null)
             {
                 throw new Exception("Payment not found");
             }
+            return payment;
+        }
+
+        public async Task<Payment> ProcessPaymentAsync(Payment payment)
+        {
+            _context.Payments.Add(payment);
+            await _context.SaveChangesAsync();
             return payment;
         }
 

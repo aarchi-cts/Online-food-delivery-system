@@ -17,7 +17,11 @@ builder.Services.AddDbContext<FoodDbContext>(options =>
 builder.Services.AddScoped<IPayment, PaymentRepository>();
 builder.Services.AddScoped<IOrder, OrderRepository>();
 builder.Services.AddScoped<IMenuItem, MenuItemRepository>();
+builder.Services.AddScoped<IRestaurant, RestaurantRepository>();
+builder.Services.AddScoped<ICustomer, CustomerRepository>();
 builder.Services.AddScoped<PaymentService>();
+builder.Services.AddScoped<CustomerService>();
+builder.Services.AddScoped<RestaurantService>();
 builder.Services.AddScoped<MenuItemService>();
 builder.Services.AddScoped<OrderService>();
 builder.Services.AddControllers().AddNewtonsoftJson(options =>

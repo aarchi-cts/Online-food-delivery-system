@@ -21,6 +21,11 @@ namespace Online_food_delivery_system.Models
         [Phone]
         public string? Phone { get; set; }
 
+        [Required(ErrorMessage = "Please Enter Your Address")]
+        public string? Address { get; set; }    
+
+        
+
         //[Required]
         //[DataType(DataType.Password)]
         //public string? Password { get; set; }

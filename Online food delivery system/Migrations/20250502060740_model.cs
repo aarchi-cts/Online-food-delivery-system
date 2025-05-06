@@ -194,7 +194,7 @@ namespace Online_food_delivery_system.Migrations
                         name: "FK_Deliveries_Payments_OrderID",
                         column: x => x.OrderID,
                         principalTable: "Payments",
-                        principalColumn: "OrderId",
+                        principalColumn: "PaymentId",
                         onDelete: ReferentialAction.Restrict);
                 });
 

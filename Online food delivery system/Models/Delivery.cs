@@ -9,20 +9,23 @@ namespace Online_food_delivery_system.Models
         [Key]
         public int DeliveryID { get; set; }
 
-        [ForeignKey("Order")]
+       
         public int? OrderID { get; set; }
         public Order?Order { get; set; }
 
-        [Required]
-        [ForeignKey("Agent")]
+       
+      
         public int? AgentID { get; set; }
-        public Agent?Agent { get; set; }
+       
 
         //public DateTime EstimatedTimeOfArrival { get; set; }
 
-       // [ForeignKey("Payment")]
+        // [ForeignKey("Payment")]
         //public int OrderId { get; set; }
-        public Payment?Payment { get; set; }
+        //[ForeignKey("OrderID")]
+        //public Payment? Payment { get; set; }
+        [ForeignKey("AgentID")]
+        public Agent? Agent { get; set; }
 
 
     }

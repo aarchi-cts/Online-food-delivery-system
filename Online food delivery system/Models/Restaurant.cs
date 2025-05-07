@@ -20,6 +20,7 @@ namespace Online_food_delivery_system.Models
 
         [Required(ErrorMessage = "Please Enter your Address")]
         public string? Address { get; set; }
+        public string? Email { get; set; }
 
         //[Required(ErrorMessage = "Please Enter your Password")]
         //[DataType(DataType.Password)]

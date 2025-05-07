@@ -23,16 +23,18 @@ builder.Services.AddScoped<IOrder, OrderRepository>();
 builder.Services.AddScoped<IMenuItem, MenuItemRepository>();
 builder.Services.AddScoped<IRestaurant, RestaurantRepository>();
 builder.Services.AddScoped<ICustomer, CustomerRepository>();
+builder.Services.AddScoped<ITokenGenerate, TokenService>();
+builder.Services.AddScoped<IDelivery, DeliveryRepository>();
+builder.Services.AddScoped<IAgent, AgentRepository>();
+builder.Services.AddScoped<IUser, UserRepository>();
 builder.Services.AddScoped<PaymentService>();
 builder.Services.AddScoped<CustomerService>();
 builder.Services.AddScoped<RestaurantService>();
 builder.Services.AddScoped<MenuItemService>();
 builder.Services.AddScoped<OrderService>();
-builder.Services.AddScoped<IDelivery, DeliveryRepository>();
-builder.Services.AddScoped<IAgent, AgentRepository>();
 builder.Services.AddScoped<DeliveryService>();
 builder.Services.AddScoped<AgentService>();
-builder.Services.AddScoped<ITokenGenerate, TokenService>();
+builder.Services.AddScoped<UserService>();
 
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {

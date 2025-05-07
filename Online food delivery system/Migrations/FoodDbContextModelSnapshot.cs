@@ -234,6 +234,9 @@ namespace Online_food_delivery_system.Migrations
                         .IsRequired()
                         .HasColumnType("bit");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("RestaurantContact")
                         .IsRequired()
                         .HasMaxLength(15)

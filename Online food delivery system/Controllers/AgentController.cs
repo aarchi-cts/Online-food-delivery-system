@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Online_food_delivery_system.Models;
 using Online_food_delivery_system.Service;
 
@@ -16,6 +17,7 @@ namespace Online_food_delivery_system.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin,agent")]
         public async Task<IActionResult> GetAllAgents()
         {
             var agents = await _agentService.GetAllAgentsAsync();
@@ -23,6 +25,7 @@ namespace Online_food_delivery_system.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "agent")]
         public async Task<IActionResult> AddAgent([FromBody] Agent agent)
         {
             await _agentService.AddAgentAsync(agent);

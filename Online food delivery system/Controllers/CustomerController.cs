@@ -7,7 +7,6 @@ namespace Online_food_delivery_system.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Customer")]
     public class CustomerController : ControllerBase
     {
         private readonly CustomerService _customerService;
@@ -18,6 +17,7 @@ namespace Online_food_delivery_system.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin,customer")]
         public async Task<IActionResult> GetAllCustomers()
         {
             var customers = await _customerService.GetAllCustomersAsync();
@@ -25,6 +25,7 @@ namespace Online_food_delivery_system.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "customer")]
         public async Task<IActionResult> GetCustomerById(int id)
         {
             var customer = await _customerService.GetCustomerByIdAsync(id);
@@ -34,6 +35,7 @@ namespace Online_food_delivery_system.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "customer")]
         public async Task<IActionResult> AddCustomer([FromBody] Customer customer)
         {
             await _customerService.AddCustomerAsync(customer);
@@ -41,6 +43,7 @@ namespace Online_food_delivery_system.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "customer")]
         public async Task<IActionResult> UpdateCustomer(int id, [FromBody] Customer customer)
         {
             if (id != customer.CustomerID)
@@ -51,6 +54,7 @@ namespace Online_food_delivery_system.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "customer")]
         public async Task<IActionResult> DeleteCustomer(int id)
         {
             await _customerService.DeleteCustomerAsync(id);

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Online_food_delivery_system.Models;
 using Online_food_delivery_system.Service;
 
@@ -24,22 +25,30 @@ namespace Online_food_delivery_system.Controllers
         }
 
         // Get: api/Payment/{id}
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetPaymentById(int id)
-        {
-            var payment = await _paymentService.GetPaymentByIdAsync(id);
-            if (payment == null) return NotFound();
-            return Ok(payment);
-        }
+        //[HttpGet("{id}")]
+        //public async Task<IActionResult> GetPaymentById(int id)
+        //{
+        //    var payment = await _paymentService.GetPaymentByIdAsync(id);
+        ////    var payment = await _context.Payments
+        ////.Include(p => p.Order) // Include related Order
+        ////    .ThenInclude(o => o.Customer) // Include Customer in Order
+        ////.Include(p => p.Order)
+        ////    .ThenInclude(o => o.Restaurant) // Include Restaurant in Order
+        ////.Include(p => p.Delivery) // Include related Delivery
+        ////    .ThenInclude(d => d.Agent) // Include Agent in Delivery
+        ////.FirstOrDefaultAsync(p => p.PaymentID == ID);
+        //    if (payment == null) return NotFound();
+        //    return Ok(payment);
+        //}
 
-        // Post: api/Payment
-        [HttpPost]
-        public async Task<IActionResult> AddPayment([FromBody] Payment payment)
-        {
-            if (payment == null) return BadRequest("Payment cannot be null");
-            await _paymentService.AddPaymentAsync(payment);
-            return CreatedAtAction(nameof(GetPaymentById), new { id = payment.PaymentID }, payment);
-        }
+        //// Post: api/Payment
+        //[HttpPost]
+        //public async Task<IActionResult> AddPayment([FromBody] Payment payment)
+        //{
+        //    if (payment == null) return BadRequest("Payment cannot be null");
+        //    await _paymentService.AddPaymentAsync(payment);
+        //    return CreatedAtAction(nameof(GetPaymentById), new { id = payment.PaymentID }, payment);
+        //}
 
         // Put: api/Payment/{id}
         [HttpPut("{id}")]
@@ -51,20 +60,20 @@ namespace Online_food_delivery_system.Controllers
         }
 
         // Delete: api/Payment/{id}
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePayment(int id)
-        {
-            await _paymentService.DeletePaymentAsync(id);
-            return NoContent();
-        }
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeletePayment(int id)
+        //{
+        //    await _paymentService.DeletePaymentAsync(id);
+        //    return NoContent();
+        //}
 
-        // Post: api/Payment/Process
-        [HttpPost("Process")]
-        public async Task<IActionResult> ProcessPayment([FromBody] Payment payment)
-        {
-            if (payment == null) return BadRequest("Payment cannot be null");
-            var processedPayment = await _paymentService.ProcessPaymentAsync(payment);
-            return Ok(processedPayment);
-        }
+        //// Post: api/Payment/Process
+        //[HttpPost("Process")]
+        //public async Task<IActionResult> ProcessPayment([FromBody] Payment payment)
+        //{
+        //    if (payment == null) return BadRequest("Payment cannot be null");
+        //    var processedPayment = await _paymentService.ProcessPaymentAsync(payment);
+        //    return Ok(processedPayment);
+        //}
     }
 }

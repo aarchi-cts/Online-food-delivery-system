@@ -40,7 +40,7 @@ namespace Online_food_delivery_system.Models
                  .WithOne(o => o.Delivery)
                  .HasForeignKey<Delivery>(d => d.OrderID)
                  .OnDelete(DeleteBehavior.Restrict);// Specify OnDelete behavior
-
+            
             // Agent has one-to-many relationship with Deliveries
             modelBuilder.Entity<Delivery>()
                 .HasOne(d => d.Agent)
@@ -50,9 +50,9 @@ namespace Online_food_delivery_system.Models
 
             // Order has one-to-one relationship with Payment
             modelBuilder.Entity<Payment>()
-                .HasOne(p => p.Order)
+                .HasOne(p => p.Delivery)
                 .WithOne(o => o.Payment)
-                .HasForeignKey<Payment>(p => p.OrderID)
+                .HasForeignKey<Delivery>(p => p.OrderID)
                 .OnDelete(DeleteBehavior.Restrict); // Specify OnDelete behavior
 
             // Delivery has one-to-one relationship with Payment

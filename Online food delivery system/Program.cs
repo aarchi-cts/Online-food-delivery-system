@@ -24,6 +24,11 @@ builder.Services.AddScoped<CustomerService>();
 builder.Services.AddScoped<RestaurantService>();
 builder.Services.AddScoped<MenuItemService>();
 builder.Services.AddScoped<OrderService>();
+builder.Services.AddScoped<IDelivery, DeliveryRepository>();
+builder.Services.AddScoped<IAgent, AgentRepository>();
+builder.Services.AddScoped<DeliveryService>();
+builder.Services.AddScoped<AgentService>();
+
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;

@@ -8,13 +8,19 @@ namespace Online_food_delivery_system.Models
         [Key]
         public int AgentID { get; set; }
 
-        [Required(ErrorMessage = "Please Enter Your AgentContact")]
-        [MaxLength(15)]
-        public string? AgentContact { get; set; }
 
         [Required(ErrorMessage = "Please Enter Your Name")]
         [MaxLength(255)]
         public string? Name { get; set; }
+
+        [Required(ErrorMessage = "Please Enter Your AgentContact")]
+        [MaxLength(15)]
+        public string? AgentContact { get; set; }
+
+
+        [Required(ErrorMessage = "Please Enter Your Email")]
+        [EmailAddress]
+        public string? Email { get; set; }
         public List<Delivery>? Deliveries { get; set; } = new List<Delivery>(); // An agent can handle multiple deliveries,
                                                                                // so the Delivery property should be a collection.
                                                                                // Initializing it ensures that it is not null when accessed.

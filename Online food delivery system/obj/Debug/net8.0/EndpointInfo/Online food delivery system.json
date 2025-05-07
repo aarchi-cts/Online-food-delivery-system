@@ -5,6 +5,52 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/Agent": {
+      "get": {
+        "tags": [
+          "Agent"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Agent"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agent"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agent"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agent"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Customer": {
       "get": {
         "tags": [
@@ -140,41 +186,92 @@
         }
       }
     },
-    "/api/MenuItem": {
+    "/api/Delivery": {
       "get": {
         "tags": [
-          "MenuItem"
+          "Delivery"
         ],
         "responses": {
           "200": {
             "description": "OK"
           }
         }
-      },
+      }
+    },
+    "/api/Delivery/assign": {
       "post": {
         "tags": [
-          "MenuItem"
+          "Delivery"
+        ],
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "agentId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "estimatedTimeOfArrival",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Delivery/{id}/status": {
+      "put": {
+        "tags": [
+          "Delivery"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
         ],
         "requestBody": {
           "content": {
             "application/json-patch+json": {
               "schema": {
-                "$ref": "#/components/schemas/MenuItem"
+                "type": "string"
               }
             },
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/MenuItem"
+                "type": "string"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/MenuItem"
+                "type": "string"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/MenuItem"
+                "type": "string"
               }
             }
           }
@@ -186,87 +283,10 @@
         }
       }
     },
-    "/api/MenuItem/{id}": {
+    "/api/MenuItem": {
       "get": {
         "tags": [
           "MenuItem"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "MenuItem"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/MenuItem"
-              }
-            },
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MenuItem"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MenuItem"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/MenuItem"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "MenuItem"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
         ],
         "responses": {
           "200": {
@@ -528,64 +548,9 @@
             "description": "OK"
           }
         }
-      },
-      "post": {
-        "tags": [
-          "Payment"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/Payment"
-              }
-            },
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Payment"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Payment"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/Payment"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
       }
     },
     "/api/Payment/{id}": {
-      "get": {
-        "tags": [
-          "Payment"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
       "put": {
         "tags": [
           "Payment"
@@ -600,63 +565,6 @@
               "format": "int32"
             }
           }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/Payment"
-              }
-            },
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Payment"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Payment"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/Payment"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Payment"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Payment/Process": {
-      "post": {
-        "tags": [
-          "Payment"
         ],
         "requestBody": {
           "content": {
@@ -869,6 +777,7 @@
       "Agent": {
         "required": [
           "agentContact",
+          "email",
           "name"
         ],
         "type": "object",
@@ -877,15 +786,20 @@
             "type": "integer",
             "format": "int32"
           },
+          "name": {
+            "maxLength": 255,
+            "minLength": 1,
+            "type": "string"
+          },
           "agentContact": {
             "maxLength": 15,
             "minLength": 1,
             "type": "string"
           },
-          "name": {
-            "maxLength": 255,
+          "email": {
             "minLength": 1,
-            "type": "string"
+            "type": "string",
+            "format": "email"
           },
           "deliveries": {
             "type": "array",
@@ -940,9 +854,6 @@
         "additionalProperties": false
       },
       "Delivery": {
-        "required": [
-          "agentID"
-        ],
         "type": "object",
         "properties": {
           "deliveryID": {
@@ -959,13 +870,22 @@
           },
           "agentID": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
-          "agent": {
-            "$ref": "#/components/schemas/Agent"
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "estimatedTimeOfArrival": {
+            "type": "string",
+            "format": "date-time"
           },
           "payment": {
             "$ref": "#/components/schemas/Payment"
+          },
+          "agent": {
+            "$ref": "#/components/schemas/Agent"
           }
         },
         "additionalProperties": false

@@ -1,5 +1,31 @@
 [
   {
+    "ContainingType": "Online_food_delivery_system.Controllers.AgentController",
+    "Method": "GetAllAgents",
+    "RelativePath": "api/Agent",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Online_food_delivery_system.Controllers.AgentController",
+    "Method": "AddAgent",
+    "RelativePath": "api/Agent",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "agent",
+        "Type": "Online_food_delivery_system.Models.Agent",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Online_food_delivery_system.Controllers.CustomerController",
     "Method": "GetAllCustomers",
     "RelativePath": "api/Customer",
@@ -79,9 +105,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Online_food_delivery_system.Controllers.MenuItemController",
-    "Method": "GetAllMenuItems",
-    "RelativePath": "api/MenuItem",
+    "ContainingType": "Online_food_delivery_system.Controllers.DeliveryController",
+    "Method": "GetAllDeliveries",
+    "RelativePath": "api/Delivery",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -89,41 +115,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Online_food_delivery_system.Controllers.MenuItemController",
-    "Method": "AddMenuItem",
-    "RelativePath": "api/MenuItem",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "menuItem",
-        "Type": "Online_food_delivery_system.Models.MenuItem",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Online_food_delivery_system.Controllers.MenuItemController",
-    "Method": "GetMenuItemById",
-    "RelativePath": "api/MenuItem/{id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Online_food_delivery_system.Controllers.MenuItemController",
-    "Method": "UpdateMenuItem",
-    "RelativePath": "api/MenuItem/{id}",
+    "ContainingType": "Online_food_delivery_system.Controllers.DeliveryController",
+    "Method": "UpdateDeliveryStatus",
+    "RelativePath": "api/Delivery/{id}/status",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -134,27 +128,47 @@
         "IsRequired": true
       },
       {
-        "Name": "menuItem",
-        "Type": "Online_food_delivery_system.Models.MenuItem",
+        "Name": "status",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Online_food_delivery_system.Controllers.MenuItemController",
-    "Method": "DeleteMenuItem",
-    "RelativePath": "api/MenuItem/{id}",
-    "HttpMethod": "DELETE",
+    "ContainingType": "Online_food_delivery_system.Controllers.DeliveryController",
+    "Method": "AssignDeliveryAgent",
+    "RelativePath": "api/Delivery/assign",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "id",
+        "Name": "orderId",
         "Type": "System.Int32",
-        "IsRequired": true
+        "IsRequired": false
+      },
+      {
+        "Name": "agentId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "estimatedTimeOfArrival",
+        "Type": "System.DateTime",
+        "IsRequired": false
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Online_food_delivery_system.Controllers.MenuItemController",
+    "Method": "GetAllMenuItems",
+    "RelativePath": "api/MenuItem",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -316,38 +330,6 @@
   },
   {
     "ContainingType": "Online_food_delivery_system.Controllers.PaymentController",
-    "Method": "AddPayment",
-    "RelativePath": "api/Payment",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "payment",
-        "Type": "Online_food_delivery_system.Models.Payment",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Online_food_delivery_system.Controllers.PaymentController",
-    "Method": "GetPaymentById",
-    "RelativePath": "api/Payment/{id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Online_food_delivery_system.Controllers.PaymentController",
     "Method": "UpdatePayment",
     "RelativePath": "api/Payment/{id}",
     "HttpMethod": "PUT",
@@ -359,38 +341,6 @@
         "Type": "System.Int32",
         "IsRequired": true
       },
-      {
-        "Name": "payment",
-        "Type": "Online_food_delivery_system.Models.Payment",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Online_food_delivery_system.Controllers.PaymentController",
-    "Method": "DeletePayment",
-    "RelativePath": "api/Payment/{id}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Online_food_delivery_system.Controllers.PaymentController",
-    "Method": "ProcessPayment",
-    "RelativePath": "api/Payment/Process",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
       {
         "Name": "payment",
         "Type": "Online_food_delivery_system.Models.Payment",

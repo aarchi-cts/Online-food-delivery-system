@@ -20,9 +20,9 @@ namespace Online_food_delivery_system.Service
             return await _paymentRepository.GetAllAsync();
         }
 
-        public async Task<Payment> GetPaymentByIdAsync(int paymentID)
+        public async Task<Payment> GetPaymentByIdAsync(int orderID)
         {
-            return await _paymentRepository.GetByIdAsync(paymentID);
+            return await _paymentRepository.GetByIdAsync(orderID);
         }
 
         public async Task AddPaymentAsync(Payment payment)

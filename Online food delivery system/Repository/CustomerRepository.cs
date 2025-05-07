@@ -16,16 +16,36 @@ namespace Online_food_delivery_system.Repository
         public async Task<IEnumerable<Customer>> GetAllAsync()
         {
             return await _context.Customers
-                .Include(c => c.Orders) // Include related orders
+                .Include(c => c.Orders) // Include related Orders
+                    .ThenInclude(o => o.Restaurant) // Include Restaurant in Orders
+                .Include(c => c.Orders)
+                    .ThenInclude(o => o.Payment) // Include Payment in Orders
+                .Include(c => c.Orders)
+                    .ThenInclude(o => o.Delivery) // Include Delivery in Orders
+                        .ThenInclude(d => d.Agent) // Include Agent in Delivery
+                .Include(c => c.Orders)
+                    .ThenInclude(o => o.OrderMenuItems) // Include OrderMenuItems in Orders
+                        .ThenInclude(omi => omi.MenuItem) // Include MenuItem in OrderMenuItems
                 .ToListAsync();
         }
+
 
         public async Task<Customer> GetByIdAsync(int customerId)
         {
             return await _context.Customers
-                .Include(c => c.Orders) // Include related orders
+                .Include(c => c.Orders) // Include related Orders
+                    .ThenInclude(o => o.Restaurant) // Include Restaurant in Orders
+                .Include(c => c.Orders)
+                    .ThenInclude(o => o.Payment) // Include Payment in Orders
+                .Include(c => c.Orders)
+                    .ThenInclude(o => o.Delivery) // Include Delivery in Orders
+                        .ThenInclude(d => d.Agent) // Include Agent in Delivery
+                .Include(c => c.Orders)
+                    .ThenInclude(o => o.OrderMenuItems) // Include OrderMenuItems in Orders
+                        .ThenInclude(omi => omi.MenuItem) // Include MenuItem in OrderMenuItems
                 .FirstOrDefaultAsync(c => c.CustomerID == customerId);
         }
+
 
         public async Task AddAsync(Customer customer)
         {

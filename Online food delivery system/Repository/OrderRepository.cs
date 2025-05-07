@@ -35,7 +35,7 @@ namespace Online_food_delivery_system.Repository
             {
                 OrderID = order.OrderID,
                 Amount = order.TotalAmount,
-                PaymentMethod = "Pending", // or any default value
+                PaymentMethod = "Cash", // or any default value
                 Status = "Pending" // or any default value
             };
 

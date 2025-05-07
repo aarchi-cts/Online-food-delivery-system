@@ -49,6 +49,8 @@ namespace Online_food_delivery_system.Controllers
                 var item = await _menuItemService.GetMenuItemByIdAsync(itemId);
                 if (item == null)
                     return NotFound($"Menu item with ID {itemId} not found.");
+                if(item.RestaurantID != orderDto.RestaurantID)
+                    return BadRequest($"Menu item with ID {itemId} does not belong to the specified restaurant.");
 
                 menuItems.Add(item);
                 totalAmount += item.Price ?? 0;

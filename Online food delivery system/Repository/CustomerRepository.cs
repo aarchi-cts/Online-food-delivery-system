@@ -49,6 +49,20 @@ namespace Online_food_delivery_system.Repository
 
         public async Task AddAsync(Customer customer)
         {
+            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == customer.Email);
+            if(existingUser == null)
+            {
+                var user = new User
+                {
+                    Username = customer.Name,
+                    Email = customer.Email,
+                    Password = "default",
+                    Role = "customer"
+                };
+                
+                _context.Users.Add(user);
+                await _context.SaveChangesAsync();
+            }
             await _context.Customers.AddAsync(customer);
             await _context.SaveChangesAsync();
         }

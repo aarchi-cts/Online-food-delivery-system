@@ -986,8 +986,7 @@
         "required": [
           "address",
           "email",
-          "name",
-          "phone"
+          "name"
         ],
         "type": "object",
         "properties": {
@@ -1006,9 +1005,8 @@
             "format": "email"
           },
           "phone": {
-            "minLength": 1,
             "type": "string",
-            "format": "tel"
+            "nullable": true
           },
           "address": {
             "minLength": 1,

@@ -25,7 +25,7 @@ namespace Online_food_delivery_system.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "customer")]
+        [Authorize(Roles = "customer,admin")]
         public async Task<IActionResult> GetCustomerById(int id)
         {
             var customer = await _customerService.GetCustomerByIdAsync(id);
@@ -35,15 +35,16 @@ namespace Online_food_delivery_system.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "customer")]
+        //[Authorize(Roles = "customer,admin")]
         public async Task<IActionResult> AddCustomer([FromBody] Customer customer)
         {
+
             await _customerService.AddCustomerAsync(customer);
             return CreatedAtAction(nameof(GetCustomerById), new { id = customer.CustomerID }, customer);
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "customer")]
+        [Authorize(Roles = "customer,admin")]
         public async Task<IActionResult> UpdateCustomer(int id, [FromBody] Customer customer)
         {
             if (id != customer.CustomerID)
@@ -54,7 +55,7 @@ namespace Online_food_delivery_system.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "customer")]
+        [Authorize(Roles = "customer,admin")]
         public async Task<IActionResult> DeleteCustomer(int id)
         {
             await _customerService.DeleteCustomerAsync(id);

@@ -36,7 +36,7 @@ namespace Online_food_delivery_system.Controllers
         public async Task<IActionResult> CreateUser([FromBody] User user)
         {
             // Define valid roles
-            var validRoles = new List<string> { "customer", "restaurant", "agent" };
+            var validRoles = new List<string> { "customer", "restaurant", "agent" ,"admin"};
 
             // Check if the role is valid
             if (string.IsNullOrWhiteSpace(user.Role) || !validRoles.Contains(user.Role.ToLower()))

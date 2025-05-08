@@ -17,8 +17,8 @@ namespace Online_food_delivery_system.Models
         [EmailAddress]
         public string? Email { get; set; }
 
-        [Required(ErrorMessage = "Please Enter Your Phone")]
-        [Phone]
+        //[Required(ErrorMessage = "Please Enter Your Phone")]
+        //[Phone]
         public string? Phone { get; set; }
 
         [Required(ErrorMessage = "Please Enter Your Address")]

@@ -25,7 +25,7 @@ namespace Online_food_delivery_system.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "agent")]
+        [Authorize(Roles = "agent,admin")]
         public async Task<IActionResult> AddAgent([FromBody] Agent agent)
         {
             await _agentService.AddAgentAsync(agent);

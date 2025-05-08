@@ -4,7 +4,7 @@ using Online_food_delivery_system.Models;
 
 namespace Online_food_delivery_system.Repository
 {
-    public class UserRepository: IUser
+    public class UserRepository : IUser
     {
         private readonly FoodDbContext _context;
         public UserRepository(FoodDbContext context)
@@ -27,16 +27,18 @@ namespace Online_food_delivery_system.Repository
             {
                 throw new Exception("User with this email already exists");
             }
-            if(user.Role?.ToLower() == "customer")
+            if (user.Role?.ToLower() == "customer")
             {
                 var existingCustomer = await _context.Customers.FirstOrDefaultAsync(c => c.Email == user.Email);
-                if(existingCustomer==null)
+                if (existingCustomer == null)
                 {
                     var customer = new Customer
                     {
                         Name = user.Username,
                         Email = user.Email,
-             
+                        Phone = "+91",
+                        Address = "Address"
+
                     };
                     _context.Customers.Add(customer);
                     await _context.SaveChangesAsync();
@@ -47,11 +49,12 @@ namespace Online_food_delivery_system.Repository
                 var existingCustomer = await _context.Agents.FirstOrDefaultAsync(c => c.Email == user.Email);
                 if (existingCustomer == null)
                 {
-                    var  agent = new Agent
+                    var agent = new Agent
                     {
                         Name = user.Username,
                         Email = user.Email,
-                        
+                        AgentContact = "+91"
+
                     };
                     _context.Agents.Add(agent);
                     await _context.SaveChangesAsync();
@@ -66,19 +69,22 @@ namespace Online_food_delivery_system.Repository
                     {
                         RestaurantName = user.Username,
                         Email = user.Email,
-                        
+                        RestaurantContact = "+91",
+                        Address = "default",
+                        Availability = true, 
+
                     };
                     _context.Restaurants.Add(restaurant);
                     await _context.SaveChangesAsync();
                 }
             }
-                await _context.Users.AddAsync(user);
+            await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
         }
         public async Task UpdateAsync(User user)
         {
-            
-           
+
+
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
         }

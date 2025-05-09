@@ -22,8 +22,8 @@ namespace Online_food_delivery_system.Models
 
         // [ForeignKey("Payment")]
         //public int OrderId { get; set; }
-        [ForeignKey("OrderID")]
-        public Payment? Payment { get; set; }
+        //[ForeignKey("OrderID")]
+        //public Payment? Payment { get; set; }
         [ForeignKey("AgentID")]
         public Agent? Agent { get; set; }
 

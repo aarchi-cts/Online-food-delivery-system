@@ -1,14 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Collections.Generic;
 
 namespace Online_food_delivery_system.Models
 {
-    public class MenuItem
+    public class MenuItemDTO
     {
-        [Key]
-        public int ItemID { get; set; }
-
         [Required(ErrorMessage = "Please Enter Your Name")]
         [MaxLength(255)]
         public string? Name { get; set; }
@@ -16,16 +11,11 @@ namespace Online_food_delivery_system.Models
         [Required(ErrorMessage = "Please Enter Description of the Item")]
         public string? Description { get; set; }
 
-        [Required(ErrorMessage = "Please Enter Price ")]
-        [Column(TypeName = "decimal(10, 2)")]
+        [Required(ErrorMessage = "Please Enter Price")]
         [Range(20, 30000, ErrorMessage = "Price must be between 20 and 30000")]
         public decimal? Price { get; set; }
 
-        [ForeignKey("Restaurant")]
+        [Required(ErrorMessage = "Please Enter Restaurant ID")]
         public int? RestaurantID { get; set; }
-        public Restaurant? Restaurant { get; set; }
-
-        public List<OrderMenuItem>? OrderMenuItems { get; set; } = new List<OrderMenuItem>();
-
     }
 }

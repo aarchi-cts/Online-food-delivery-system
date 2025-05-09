@@ -34,8 +34,8 @@ namespace Online_food_delivery_system.Repository
                 .ThenInclude(o => o.Customer)
                 .Include(p => p.Order)
                 .ThenInclude(o => o.Restaurant)
-                .Include(p => p.Delivery)
-                .ThenInclude(p=>p.Agent)
+                //.Include(p => p.Delivery)
+                //.ThenInclude(p=>p.Agent)
                 .ToListAsync();
 
         }
@@ -47,8 +47,8 @@ namespace Online_food_delivery_system.Repository
             .ThenInclude(o => o.Customer) // Include Customer in Order
         .Include(p => p.Order)
             .ThenInclude(o => o.Restaurant) // Include Restaurant in Order
-        .Include(p => p.Delivery) // Include related Delivery
-            .ThenInclude(d => d.Agent) // Include Agent in Delivery
+        //.Include(p => p.Delivery) // Include related Delivery
+        //    .ThenInclude(d => d.Agent) // Include Agent in Delivery
         .FirstOrDefaultAsync(p => p.PaymentID == ID); // Use PaymentID instead of OrderID for clarity
 
             if (payment == null)

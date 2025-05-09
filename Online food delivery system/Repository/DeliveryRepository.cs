@@ -16,32 +16,38 @@ namespace Online_food_delivery_system.Repository
         public async Task<IEnumerable<Delivery>> GetAllAsync()
         {
             return await _context.Deliveries
-                .Include(d => d.Order) // Include related Order
-                    .ThenInclude(o => o.Customer) // Include Customer in Order
                 .Include(d => d.Order)
-                    .ThenInclude(o => o.Restaurant) // Include Restaurant in Order
+                    .ThenInclude(o => o.Customer!) // Use null-forgiving operator
                 .Include(d => d.Order)
-                    .ThenInclude(o => o.Payment) // Include Payment in Order
+                    .ThenInclude(o => o.Restaurant!)
                 .Include(d => d.Order)
-                    .ThenInclude(o => o.OrderMenuItems) // Include OrderMenuItems in Order
-                .Include(d => d.Agent) // Include related Agent
+                    .ThenInclude(o => o.Payment!)
+                .Include(d => d.Order)
+                    .ThenInclude(o => o.OrderMenuItems!)
+                .Include(d => d.Agent!)
                 .ToListAsync();
         }
 
-        public async Task<Delivery> GetByIdAsync(int deliveryId)
+        public async Task<Delivery?> GetByIdAsync(int deliveryId)
         {
             return await _context.Deliveries
-                .Include(d => d.Order) // Include related Order
-                    .ThenInclude(o => o.Customer) // Include Customer in Order
                 .Include(d => d.Order)
-                    .ThenInclude(o => o.Restaurant) // Include Restaurant in Order
+                    .ThenInclude(o => o.Customer!)
                 .Include(d => d.Order)
-                    .ThenInclude(o => o.Payment) // Include Payment in Order
+                    .ThenInclude(o => o.Restaurant!)
                 .Include(d => d.Order)
-                    .ThenInclude(o => o.OrderMenuItems) // Include OrderMenuItems in Order
-                .Include(d => d.Agent) // Include related Agent
+                    .ThenInclude(o => o.Payment!)
+                .Include(d => d.Order)
+                    .ThenInclude(o => o.OrderMenuItems!)
+                .Include(d => d.Agent!)
                 .FirstOrDefaultAsync(d => d.DeliveryID == deliveryId);
         }
+
+        public async Task<IEnumerable<Agent>> GetAvailableAgentsAsync()
+        {
+            return await _context.Agents.Where(a => a.IsAvailable).ToListAsync();
+        }
+
 
         public async Task AddAsync(Delivery delivery)
         {
@@ -61,6 +67,16 @@ namespace Online_food_delivery_system.Repository
             if (delivery != null)
             {
                 _context.Deliveries.Remove(delivery);
+                await _context.SaveChangesAsync();
+            }
+        }
+        public async Task UpdateAgentAvailabilityAsync(Agent selectedAgent)
+        {
+            var agent = await _context.Agents.FindAsync(selectedAgent.AgentID);
+            if (agent != null)
+            {
+                agent.IsAvailable = selectedAgent.IsAvailable;
+                _context.Agents.Update(agent);
                 await _context.SaveChangesAsync();
             }
         }

@@ -198,6 +198,36 @@
         }
       }
     },
+    "/api/Delivery/assign/auto": {
+      "post": {
+        "tags": [
+          "Delivery"
+        ],
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "estimatedTimeOfArrival",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Delivery/assign": {
       "post": {
         "tags": [
@@ -287,6 +317,129 @@
       "get": {
         "tags": [
           "MenuItem"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "MenuItem"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MenuItemDTO"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MenuItemDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MenuItemDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MenuItemDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MenuItem/{id}": {
+      "get": {
+        "tags": [
+          "MenuItem"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "MenuItem"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MenuItem"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MenuItem"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MenuItem"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MenuItem"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "MenuItem"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -616,22 +769,22 @@
           "content": {
             "application/json-patch+json": {
               "schema": {
-                "$ref": "#/components/schemas/Restaurant"
+                "$ref": "#/components/schemas/RestaurantDTO"
               }
             },
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Restaurant"
+                "$ref": "#/components/schemas/RestaurantDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Restaurant"
+                "$ref": "#/components/schemas/RestaurantDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Restaurant"
+                "$ref": "#/components/schemas/RestaurantDTO"
               }
             }
           }
@@ -972,6 +1125,9 @@
             "type": "string",
             "format": "email"
           },
+          "isAvailable": {
+            "type": "boolean"
+          },
           "deliveries": {
             "type": "array",
             "items": {
@@ -1050,9 +1206,6 @@
             "type": "string",
             "format": "date-time"
           },
-          "payment": {
-            "$ref": "#/components/schemas/Payment"
-          },
           "agent": {
             "$ref": "#/components/schemas/Agent"
           }
@@ -1081,6 +1234,8 @@
             "type": "string"
           },
           "price": {
+            "maximum": 30000,
+            "minimum": 20,
             "type": "number",
             "format": "double"
           },
@@ -1098,6 +1253,37 @@
               "$ref": "#/components/schemas/OrderMenuItem"
             },
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MenuItemDTO": {
+        "required": [
+          "description",
+          "name",
+          "price",
+          "restaurantID"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 255,
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "price": {
+            "maximum": 30000,
+            "minimum": 20,
+            "type": "number",
+            "format": "double"
+          },
+          "restaurantID": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -1281,6 +1467,40 @@
             "items": {
               "$ref": "#/components/schemas/Order"
             },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RestaurantDTO": {
+        "required": [
+          "address",
+          "availability",
+          "restaurantContact",
+          "restaurantName"
+        ],
+        "type": "object",
+        "properties": {
+          "restaurantName": {
+            "maxLength": 255,
+            "minLength": 1,
+            "type": "string"
+          },
+          "restaurantContact": {
+            "maxLength": 15,
+            "minLength": 1,
+            "type": "string"
+          },
+          "availability": {
+            "type": "boolean"
+          },
+          "address": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
             "nullable": true
           }
         },

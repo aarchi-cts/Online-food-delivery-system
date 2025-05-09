@@ -21,6 +21,20 @@ namespace Online_food_delivery_system.Controllers
             var deliveries = await _deliveryService.GetAllDeliveriesAsync();
             return Ok(deliveries);
         }
+        [HttpPost("assign/auto")]
+        public async Task<IActionResult> AssignDeliveryAgentAutomatically(int orderId, DateTime estimatedTimeOfArrival)
+        {
+            try
+            {
+                await _deliveryService.AssignDeliveryAgentAutomaticallyAsync(orderId, estimatedTimeOfArrival);
+                return Ok("Delivery agent assigned automatically and successfully.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
 
         [HttpPost("assign")]
         public async Task<IActionResult> AssignDeliveryAgent(int orderId, int agentId, DateTime estimatedTimeOfArrival)

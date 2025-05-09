@@ -162,6 +162,27 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Online_food_delivery_system.Controllers.DeliveryController",
+    "Method": "AssignDeliveryAgentAutomatically",
+    "RelativePath": "api/Delivery/assign/auto",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "orderId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "estimatedTimeOfArrival",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Online_food_delivery_system.Controllers.MenuItemController",
     "Method": "GetAllMenuItems",
     "RelativePath": "api/MenuItem",
@@ -169,6 +190,75 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Online_food_delivery_system.Controllers.MenuItemController",
+    "Method": "AddMenuItem",
+    "RelativePath": "api/MenuItem",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "menuItemDto",
+        "Type": "Online_food_delivery_system.Models.MenuItemDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Online_food_delivery_system.Controllers.MenuItemController",
+    "Method": "GetMenuItemById",
+    "RelativePath": "api/MenuItem/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Online_food_delivery_system.Controllers.MenuItemController",
+    "Method": "UpdateMenuItem",
+    "RelativePath": "api/MenuItem/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "menuItem",
+        "Type": "Online_food_delivery_system.Models.MenuItem",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Online_food_delivery_system.Controllers.MenuItemController",
+    "Method": "DeleteMenuItem",
+    "RelativePath": "api/MenuItem/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -368,8 +458,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "restaurant",
-        "Type": "Online_food_delivery_system.Models.Restaurant",
+        "Name": "restaurantDto",
+        "Type": "Online_food_delivery_system.Models.RestaurantDTO",
         "IsRequired": true
       }
     ],

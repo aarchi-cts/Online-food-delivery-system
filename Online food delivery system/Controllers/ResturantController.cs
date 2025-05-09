@@ -36,11 +36,26 @@ namespace Online_food_delivery_system.Controllers
 
         [HttpPost]
         [Authorize(Roles = "resturant,admin")]
-        public async Task<IActionResult> AddRestaurant([FromBody] Restaurant restaurant)
+        [HttpPost]
+        [Authorize(Roles = "resturant,admin")]
+        public async Task<IActionResult> AddRestaurant([FromBody] RestaurantDTO restaurantDto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var restaurant = new Restaurant
+            {
+                RestaurantName = restaurantDto.RestaurantName,
+                RestaurantContact = restaurantDto.RestaurantContact,
+                Availability = restaurantDto.Availability,
+                Address = restaurantDto.Address,
+                Email = restaurantDto.Email
+            };
+
             await _restaurantService.AddRestaurantAsync(restaurant);
             return CreatedAtAction(nameof(GetRestaurantById), new { id = restaurant.RestaurantID }, restaurant);
         }
+
 
         [HttpPut("{id}")]
         [Authorize(Roles = "resturant,admin")]

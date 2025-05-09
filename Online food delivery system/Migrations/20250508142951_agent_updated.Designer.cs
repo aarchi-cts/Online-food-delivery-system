@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Online_food_delivery_system.Models;
 
@@ -11,9 +12,11 @@ using Online_food_delivery_system.Models;
 namespace Online_food_delivery_system.Migrations
 {
     [DbContext(typeof(FoodDbContext))]
-    partial class FoodDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250508142951_agent_updated")]
+    partial class agent_updated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -201,9 +204,6 @@ namespace Online_food_delivery_system.Migrations
                     b.Property<decimal?>("Amount")
                         .HasColumnType("decimal(10, 2)");
 
-                    b.Property<int?>("DeliveryID")
-                        .HasColumnType("int");
-
                     b.Property<int?>("OrderID")
                         .HasColumnType("int");
 
@@ -217,8 +217,6 @@ namespace Online_food_delivery_system.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("PaymentID");
-
-                    b.HasIndex("DeliveryID");
 
                     b.HasIndex("OrderID")
                         .IsUnique()
@@ -304,9 +302,16 @@ namespace Online_food_delivery_system.Migrations
                         .HasForeignKey("Online_food_delivery_system.Models.Delivery", "OrderID")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("Online_food_delivery_system.Models.Payment", "Payment")
+                        .WithOne("Delivery")
+                        .HasForeignKey("Online_food_delivery_system.Models.Delivery", "OrderID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.Navigation("Agent");
 
                     b.Navigation("Order");
+
+                    b.Navigation("Payment");
                 });
 
             modelBuilder.Entity("Online_food_delivery_system.Models.MenuItem", b =>
@@ -356,16 +361,9 @@ namespace Online_food_delivery_system.Migrations
 
             modelBuilder.Entity("Online_food_delivery_system.Models.Payment", b =>
                 {
-                    b.HasOne("Online_food_delivery_system.Models.Delivery", "Delivery")
-                        .WithMany()
-                        .HasForeignKey("DeliveryID");
-
                     b.HasOne("Online_food_delivery_system.Models.Order", "Order")
                         .WithOne("Payment")
-                        .HasForeignKey("Online_food_delivery_system.Models.Payment", "OrderID")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Delivery");
+                        .HasForeignKey("Online_food_delivery_system.Models.Payment", "OrderID");
 
                     b.Navigation("Order");
                 });
@@ -392,6 +390,11 @@ namespace Online_food_delivery_system.Migrations
                     b.Navigation("OrderMenuItems");
 
                     b.Navigation("Payment");
+                });
+
+            modelBuilder.Entity("Online_food_delivery_system.Models.Payment", b =>
+                {
+                    b.Navigation("Delivery");
                 });
 
             modelBuilder.Entity("Online_food_delivery_system.Models.Restaurant", b =>

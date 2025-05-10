@@ -18,8 +18,15 @@ namespace Online_food_delivery_system.Repository
                 await _context.MenuItems.AddAsync(menuItem);
                 await _context.SaveChangesAsync();
             }
+            public async Task<IEnumerable<MenuItem>> GetMenuItemsByNameAsync(string menuItemName)
+            {
+                return await _context.MenuItems
+                    .Where(m => m.Name != null && m.Name.Contains(menuItemName)) // Search by name
+                    .ToListAsync();
+            }
 
-            public async Task DeleteAsync(int itemId)
+
+        public async Task DeleteAsync(int itemId)
             {
                 var menuItem = await _context.MenuItems.FindAsync(itemId);
                 if (menuItem != null)
@@ -44,7 +51,16 @@ namespace Online_food_delivery_system.Repository
                 _context.MenuItems.Update(menuItem);
                 await _context.SaveChangesAsync();
             }
-        
+            public async Task<IEnumerable<Restaurant>> GetRestaurantsByMenuItemNameAsync(string menuItemName)
+            {
+                return await _context.MenuItems
+                    .Where(m => m.Name != null && m.Name.Contains(menuItemName)) // Added null check for Name
+                    .Select(m => m.Restaurant!)
+                    .Distinct()
+                    .ToListAsync();
+            }
+
+
     }
 
 

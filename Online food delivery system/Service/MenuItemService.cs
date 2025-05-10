@@ -22,6 +22,17 @@ namespace Online_food_delivery_system.Service
             {
                 return await _menuItemRepository.GetByIdAsync(itemId);
             }
+            public async Task<IEnumerable<MenuItem>> GetMenuItemsByNameAsync(string menuItemName)
+            {
+                return await _menuItemRepository.GetMenuItemsByNameAsync(menuItemName);
+            }
+
+
+        public async Task<IEnumerable<Restaurant>> GetRestaurantsByMenuItemNameAsync(string menuItemName)
+            {
+                return await _menuItemRepository.GetRestaurantsByMenuItemNameAsync(menuItemName);
+            }
+
 
             public async Task AddMenuItemAsync(MenuItem menuItem)
             {

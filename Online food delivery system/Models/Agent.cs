@@ -22,9 +22,7 @@ namespace Online_food_delivery_system.Models
         [EmailAddress]
         public string? Email { get; set; }
         public bool IsAvailable { get; set; } = true;
-        public List<Delivery>? Deliveries { get; set; } = new List<Delivery>(); // An agent can handle multiple deliveries,
-                                                                               // so the Delivery property should be a collection.
-                                                                               // Initializing it ensures that it is not null when accessed.
+        public List<Delivery>? Deliveries { get; set; } = new List<Delivery>(); 
 
     }
 }

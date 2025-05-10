@@ -14,6 +14,18 @@ namespace Online_food_delivery_system.Controllers
         {
             _menuItemService = menuItemService;
         }
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchMenuItem([FromQuery] string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                return BadRequest("Menu item name cannot be empty");
+
+            var menuItems = await _menuItemService.GetMenuItemsByNameAsync(name);
+            if (!menuItems.Any())
+                return NotFound("No menu items found with the specified name");
+
+            return Ok(menuItems);
+        }
 
         // GET: api/MenuItem
         [HttpGet]
@@ -22,7 +34,7 @@ namespace Online_food_delivery_system.Controllers
             var menuItems = await _menuItemService.GetAllMenuItemsAsync();
             return Ok(menuItems);
         }
-
+       
         // GET: api/MenuItem/{id}
         [HttpGet("{id}")]
         public async Task<IActionResult> GetMenuItemById(int id)

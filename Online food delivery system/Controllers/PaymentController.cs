@@ -24,22 +24,23 @@ namespace Online_food_delivery_system.Controllers
             return Ok(payments);
         }
 
-        // Get: api/Payment/{id}
-        //[HttpGet("{id}")]
-        //public async Task<IActionResult> GetPaymentById(int id)
-        //{
-        //    var payment = await _paymentService.GetPaymentByIdAsync(id);
-        ////    var payment = await _context.Payments
-        ////.Include(p => p.Order) // Include related Order
-        ////    .ThenInclude(o => o.Customer) // Include Customer in Order
-        ////.Include(p => p.Order)
-        ////    .ThenInclude(o => o.Restaurant) // Include Restaurant in Order
-        ////.Include(p => p.Delivery) // Include related Delivery
-        ////    .ThenInclude(d => d.Agent) // Include Agent in Delivery
-        ////.FirstOrDefaultAsync(p => p.PaymentID == ID);
-        //    if (payment == null) return NotFound();
-        //    return Ok(payment);
-        //}
+        [HttpPatch("{id}/status")]
+        public async Task<IActionResult> UpdatePaymentStatus(int id, [FromBody] string status)
+        {
+            if (string.IsNullOrWhiteSpace(status))
+                return BadRequest("Status cannot be null or empty");
+
+            var payment = await _paymentService.GetPaymentByIdAsync(id);
+            if (payment == null)
+                return NotFound("Payment not found");
+
+            payment.Status = status;
+            await _paymentService.UpdatePaymentAsync(payment);
+
+            return Ok("Payment status updated successfully");
+        }
+
+
 
         //// Post: api/Payment
         //[HttpPost]

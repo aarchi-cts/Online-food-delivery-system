@@ -66,6 +66,19 @@ namespace Online_food_delivery_system.Controllers
             await _restaurantService.UpdateRestaurantAsync(restaurant);
             return NoContent();
         }
+        [HttpPatch("{id}")]
+        [Authorize(Roles = "admin, restaurant")]
+        public async Task<IActionResult> UpdatePhoneAddr(int id, [FromBody] UpdatePhoneAddrDTO upd)
+        {
+            var existing = await _restaurantService.GetRestaurantByIdAsync(id);
+            if (existing == null)
+                return NotFound("Customer not found");
+            existing.RestaurantContact = upd.Phone;
+            existing.Address = upd.Address;
+            await _restaurantService.UpdateRestaurantAsync(existing);
+            return NoContent();
+        }
+
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "resturant,admin")]

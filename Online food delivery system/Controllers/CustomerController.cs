@@ -33,6 +33,18 @@ namespace Online_food_delivery_system.Controllers
                 return NotFound("Customer not found");
             return Ok(customer);
         }
+        [HttpPatch("{id}")]
+        [Authorize(Roles = "admin, customer")]
+        public async Task<IActionResult> UpdatePhoneAddr(int id, [FromBody] UpdatePhoneAddrDTO upd)
+        {
+            var existing = await _customerService.GetCustomerByIdAsync(id);
+            if (existing == null)
+                return NotFound("Customer not found");
+            existing.Phone = upd.Phone;
+            existing.Address = upd.Address;
+            await _customerService.UpdateCustomerAsync(existing);
+            return NoContent();
+        }
 
         [HttpPost]
         //[Authorize(Roles = "customer,admin")]

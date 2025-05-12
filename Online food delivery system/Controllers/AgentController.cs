@@ -39,6 +39,18 @@ namespace Online_food_delivery_system.Controllers
             await _agentService.AddAgentAsync(agent);
             return CreatedAtAction(nameof(GetAllAgents), new { id = agent.AgentID }, agent);
         }
+        [HttpPatch("{id}")]
+        [Authorize(Roles = "admin, agent")]
+        public async Task<IActionResult> UpdatePhoneAddr(int id, [FromBody] AgentcontactDTO upd)
+        {
+            var existing = await _agentService.GetAgentByIdAsync(id);
+            if (existing == null)
+                return NotFound("Customer not found");
+            existing.AgentContact = upd.Phone;
+            //existing.Address = upd.Address;
+            await _agentService.UpdateAgentAsync(existing);
+            return NoContent();
+        }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAgent(int id, [FromBody] Agent agent)

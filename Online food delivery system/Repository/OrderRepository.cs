@@ -21,7 +21,7 @@ namespace Online_food_delivery_system.Repository
             await _context.SaveChangesAsync();
         }
 
-        // Removed duplicate UpdateAgentAsync method to resolve CS0111
+        
         public async Task UpdateAgentAsync(Agent agent)
         {
             _context.Agents.Update(agent);
@@ -51,7 +51,7 @@ namespace Online_food_delivery_system.Repository
             {
                 OrderID = order.OrderID,
                 Amount = order.TotalAmount,
-                PaymentMethod = "Cash", // or any default value
+                PaymentMethod = "Google Pay", // or any default value
                 Status = "Pending" // or any default value
             };
 

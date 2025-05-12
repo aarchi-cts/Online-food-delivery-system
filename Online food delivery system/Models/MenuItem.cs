@@ -18,7 +18,7 @@ namespace Online_food_delivery_system.Models
 
         [Required(ErrorMessage = "Please Enter Price ")]
         [Column(TypeName = "decimal(10, 2)")]
-        [Range(20, 30000, ErrorMessage = "Price must be between 20 and 30000")]
+        
         public decimal? Price { get; set; }
 
         [ForeignKey("Restaurant")]

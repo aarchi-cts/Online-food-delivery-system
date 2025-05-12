@@ -23,6 +23,14 @@ namespace Online_food_delivery_system.Controllers
             var payments = await _paymentService.GetAllPaymentsAsync();
             return Ok(payments);
         }
+        [HttpGet("{id}/search")]
+        public async Task<IActionResult> GetPaymenttByOrderId(int id)
+        {
+            var payment = await _paymentService.GetPaymentByIdAsync(id);
+            if (payment == null)
+                return NotFound("Payment not found");
+            return Ok(payment);
+        }
 
         [HttpPatch("{id}/status")]
         public async Task<IActionResult> UpdatePaymentStatus(int id, [FromBody] string status)
@@ -35,9 +43,35 @@ namespace Online_food_delivery_system.Controllers
                 return NotFound("Payment not found");
 
             payment.Status = status;
+            //if status is "completed"  then assign the delivery id
+            if (status.ToLower() == "completed")
+            {
+                var delivery = payment.Order?.Delivery;
+                if (delivery == null)
+                {
+                    return BadRequest("Delivery not found for the associated order.");
+                }
+
+                // Check for an available agent
+                var availableAgent = await _paymentService.GetAvailableAgentAsync();
+                if (availableAgent == null)
+                {
+                    return BadRequest("No available agents to assign.");
+                }
+                delivery.AgentID = availableAgent.AgentID;
+                delivery.Agent = availableAgent;
+                delivery.Status = "Assigned";
+
+                // Update the agent's availability to false
+                availableAgent.IsAvailable = false;
+
+                // Update the delivery and agent in the database
+                await _paymentService.UpdateDeliveryAsync(delivery);
+                await _paymentService.UpdateAgentAsync(availableAgent);
+            }
             await _paymentService.UpdatePaymentAsync(payment);
 
-            return Ok("Payment status updated successfully");
+            return Ok("Payment status updated successfully and agent assigned");
         }
 
 

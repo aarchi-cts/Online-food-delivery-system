@@ -21,10 +21,10 @@ namespace Online_food_delivery_system.Models
         public string? Status { get; set; }
         public decimal? TotalAmount { get; set; }
 
-        public Payment? Payment { get; set; }
-        public Delivery? Delivery { get; set; }
+        public Payment? Payment { get; set; }//navigation property
+        public Delivery? Delivery { get; set; }//navigation property
 
-        public List<OrderMenuItem>? OrderMenuItems { get; set; } 
+        public List<OrderMenuItem>? OrderMenuItems { get; set; } //many-many relationship
 
 
     }

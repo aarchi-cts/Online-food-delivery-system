@@ -11,6 +11,22 @@ namespace Online_food_delivery_system.Repository
         {
             _context = context;
         }
+        public async Task<Agent?> GetAvailableAgentAsync()
+        {
+            return await _context.Agents.FirstOrDefaultAsync(a => a.IsAvailable);
+        }
+        public async Task UpdateDeliveryAsync(Delivery delivery)
+        {
+            _context.Deliveries.Update(delivery);
+            await _context.SaveChangesAsync();
+        }
+
+        // Removed duplicate UpdateAgentAsync method to resolve CS0111
+        public async Task UpdateAgentAsync(Agent agent)
+        {
+            _context.Agents.Update(agent);
+            await _context.SaveChangesAsync();
+        }
 
         public async Task AddAsync(Order order)
         {
@@ -41,6 +57,19 @@ namespace Online_food_delivery_system.Repository
 
             await _context.Payments.AddAsync(payment);
             await _context.SaveChangesAsync();
+            Delivery delivery = new Delivery
+            {
+                OrderID = order.OrderID,
+                Status = "Pending",
+                EstimatedTimeOfArrival = DateTime.Now.AddHours(1) // Example ETA
+            };
+            await _context.Deliveries.AddAsync(delivery);
+            await _context.SaveChangesAsync();
+
+            // Associate the delivery with the order
+            order.Delivery = delivery;
+            _context.Orders.Update(order);
+            await _context.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(int OrderID)
@@ -65,28 +94,16 @@ namespace Online_food_delivery_system.Repository
                 .ToListAsync();
         }
 
-        public async Task<Order> GetByIdAsync(int? OrderID)
+        public async Task<Order> GetByIdAsync(int? orderID)
         {
-            var order = await _context.Orders
-                .Include(o => o.Customer)
-                .Include(o => o.Restaurant)
-                .Include(o => o.OrderMenuItems)
-                .ThenInclude(omi => omi.MenuItem)
-                .Include(o => o.Payment)
+            return await _context.Orders
                 .Include(o => o.Delivery)
-                .FirstOrDefaultAsync(o => o.OrderID == OrderID);
-            if (order == null)
-            {
-                throw new Exception("Order not Found");
-            }
-            return order;
+                .ThenInclude(d => d.Agent) // Include the Agent navigation property
+                .FirstOrDefaultAsync(o => o.OrderID == orderID);
         }
 
         public async Task UpdateAsync(Order order)
         {
-            // Calculate the total amount for the order
-           // order.CalculateTotalAmount();
-
             // Update the order
             _context.Orders.Update(order);
             await _context.SaveChangesAsync();

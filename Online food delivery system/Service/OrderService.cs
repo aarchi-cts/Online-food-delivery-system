@@ -24,6 +24,8 @@ public class OrderService
        await _orderRepository.AddAsync(order);
         return order;
     }
+  
+
 
     public async Task<Order> UpdateOrderAsync(Order order)
     {
@@ -36,4 +38,12 @@ public class OrderService
     {
         await _orderRepository.DeleteAsync(orderID);
     }
+   
+
+    public async Task UpdateAgentAsync(Agent agent)
+    {
+        await _orderRepository.UpdateAgentAsync(agent);
+    }
+
+   
 }

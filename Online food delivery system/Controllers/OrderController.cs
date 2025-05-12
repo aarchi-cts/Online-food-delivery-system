@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Online_food_delivery_system.Migrations;
 using Online_food_delivery_system.Models;
 using Online_food_delivery_system.Service;
 
@@ -22,6 +23,7 @@ namespace Online_food_delivery_system.Controllers
         public async Task<IActionResult> GetAllOrders()
         {
             var orders = await _orderService.GetAllOrdersAsync();
+            
             return Ok(orders);
         }
 
@@ -87,6 +89,40 @@ namespace Online_food_delivery_system.Controllers
         {
             await _orderService.DeleteOrderAsync(id);
             return NoContent();
+        }
+        [HttpPatch("{id}/status")]
+        public async Task<IActionResult> UpdateOrderStatus(int id, [FromBody] string status)
+        {
+            if (string.IsNullOrWhiteSpace(status))
+                return BadRequest("Status cannot be null or empty");
+            var order = await _orderService.GetOrderByIdAsync(id);
+            if (order == null)
+                return NotFound("Order not found");
+            order.Status = status;
+            if(status.ToLower() == "completed")
+            {
+                var delivery = order.Delivery;
+                if (delivery != null)
+                {
+                    var agent=delivery.Agent;
+                    if(agent!= null)
+                    {
+                       
+                        agent.IsAvailable= true;
+                        await _orderService.UpdateAgentAsync(agent);
+                    }
+                    else
+                    {
+                        return BadRequest("No agent is assigned to the delivery.");
+                    }
+                }
+                else
+                    {
+                        return BadRequest("No delivery is associated with the order.");
+                    }
+            }
+            await _orderService.UpdateOrderAsync(order);
+            return Ok("Order status updated successfully");
         }
     }
 }

@@ -60,7 +60,7 @@ namespace Online_food_delivery_system.Repository
                     await _context.SaveChangesAsync();
                 }
             }
-            else if (user.Role?.ToLower() == "restuarant")
+            else if (user.Role?.ToLower() == "restaurant")
             {
                 var existingCustomer = await _context.Restaurants.FirstOrDefaultAsync(c => c.Email == user.Email);
                 if (existingCustomer == null)

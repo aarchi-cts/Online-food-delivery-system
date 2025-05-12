@@ -51,7 +51,7 @@ namespace Online_food_delivery_system.Service
         {
             await _paymentRepository.DeleteAsync(paymentID);
         }
-
+      
         public async Task<Payment> ProcessPaymentAsync(Payment payment)
         {
             var order = await _orderRepository.GetByIdAsync(payment.OrderID.Value); // Ensure OrderID is not null before calling GetByIdAsync
@@ -69,6 +69,19 @@ namespace Online_food_delivery_system.Service
             }
 
             return await _paymentRepository.ProcessPaymentAsync(payment);
+        }
+        public async Task UpdateDeliveryAsync(Delivery delivery)
+        {
+            await _orderRepository.UpdateDeliveryAsync(delivery);
+        }
+
+        public async Task UpdateAgentAsync(Agent agent)
+        {
+            await _orderRepository.UpdateAgentAsync(agent);
+        }
+        public async Task<Agent?> GetAvailableAgentAsync()
+        {
+            return await _orderRepository.GetAvailableAgentAsync();
         }
     }
 }

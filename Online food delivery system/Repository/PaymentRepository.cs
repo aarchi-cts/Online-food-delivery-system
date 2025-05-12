@@ -43,31 +43,15 @@ namespace Online_food_delivery_system.Repository
         public async Task<Payment> GetByIdAsync(int ID)
         {
             var payment = await _context.Payments
-        .Include(p => p.Order) // Include related Order
-            .ThenInclude(o => o.Customer) // Include Customer in Order
-        .Include(p => p.Order)
-            .ThenInclude(o => o.Restaurant) // Include Restaurant in Order
-        //.Include(p => p.Delivery) // Include related Delivery
-        //    .ThenInclude(d => d.Agent) // Include Agent in Delivery
-        .FirstOrDefaultAsync(p => p.PaymentID == ID); // Use PaymentID instead of OrderID for clarity
+                .Include(p => p.Order)
+                .ThenInclude(o => o.Delivery)
+                .FirstOrDefaultAsync(p => p.PaymentID == ID);
 
             if (payment == null)
             {
                 throw new Exception("Payment not found");
             }
             return payment;
-            //var payment = await _context.Payments
-            //    .Include(p => p.Order)
-            //    .ThenInclude(o => o.Customer)
-            //    .Include(p => p.Order)
-            //    .ThenInclude(o => o.Restaurant)
-            //    .Include(s => s.Delivery)
-            //    .FirstOrDefaultAsync(p => p.OrderID == ID);
-            //if (payment == null)
-            //{
-            //    throw new Exception("Payment not found");
-            //}
-            //return payment;
         }
 
         public async Task<Payment> ProcessPaymentAsync(Payment payment)

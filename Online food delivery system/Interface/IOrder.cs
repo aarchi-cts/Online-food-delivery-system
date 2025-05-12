@@ -9,6 +9,10 @@ namespace Online_food_delivery_system.Interface
         Task AddAsync(Order order);
         Task UpdateAsync(Order order);
         Task DeleteAsync(int OrderID);
-       // Task GetByIdAsync(int? orderID);
+        Task UpdateAgentAsync(Agent agent);
+        Task<Agent?> GetAvailableAgentAsync();
+        Task UpdateDeliveryAsync(Delivery delivery);
+
+        // Removed duplicate method declaration for UpdateAgentAsync
     }
 }
